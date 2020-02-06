@@ -28,9 +28,6 @@ class ExchangeController extends Controller
 
         ]);
     }
-/*
-
-*/
 
     public function getCacheClear (){
         $this->cacheClear();    
@@ -39,9 +36,6 @@ class ExchangeController extends Controller
             "msg" => "OK"
         ]);
     }
-/*
-
-*/
 
     public function getInfo (){
         return response()->json([
