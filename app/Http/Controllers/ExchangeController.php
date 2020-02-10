@@ -36,7 +36,6 @@ class ExchangeController extends Controller
             "msg" => "OK"
         ]);
     }
-
     public function getInfo (){
         return response()->json([
             "error" => 0,

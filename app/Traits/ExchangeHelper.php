@@ -7,18 +7,15 @@ use App\Exchange;
 trait exchangeHelper 
 {
     /*
-     *
-     *
+     * var @array
      */
      private $notSupported =[];
     /*
-     *
-     *
+     * var @boolean
      */
      private $error = false;
     /*
-     *
-     *
+     * var@integer ( as a boolean)
      */
      private $fromCache = 1;
     /**
@@ -136,6 +133,10 @@ trait exchangeHelper
 
         }
     }
+
+    /*
+     * @return void
+     */
     private function cacheClear(){
         \App\Exchange::truncate();
     }
