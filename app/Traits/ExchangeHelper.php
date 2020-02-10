@@ -86,6 +86,8 @@ trait exchangeHelper
           $this->notSupported[]=$to;
         if(count($this->notSupported)>0) 
             return false;
+        if($from == $to)
+           return $amount;
         $exchange = $this->check($from, $to);
         if( $exchange == false ){
             $this->getFormApi($from);
