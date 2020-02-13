@@ -1,4 +1,3 @@
-
 <?php
 
 namespace App\Traits;
@@ -6,7 +5,7 @@ namespace App\Traits;
 use App\ExLog;
 
 
-class ExLogExtras
+class ExLogExtra
 {
     public function add ($to="",$form="",$amount=""){
         if($to=="")
