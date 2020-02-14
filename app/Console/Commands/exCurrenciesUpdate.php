@@ -3,24 +3,23 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Extras\ExCountriesExtra;
+use App\Extras\ExCurrenciesExtra;
 
-
-class exCountriesUpdate extends Command
+class exCurrenciesUpdate extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'ex:countries:update';
+    protected $signature = 'ex:currencies:update';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'ex countries update';
+    protected $description = 'ex currencies update';
 
     /**
      * Create a new command instance.
@@ -39,8 +38,8 @@ class exCountriesUpdate extends Command
      */
     public function handle()
     {
-        $this->line('Ex Countries update');
-        $ex = new ExCountriesExtra();
+        $this->line('Ex Currencies update');
+        $ex = new ExCurrenciesExtra();
         $this->line('Get list form api ...');
         $result = $ex->updateFormApi();
         if($result === true){
