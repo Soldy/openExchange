@@ -17,8 +17,8 @@ class ExCurrencys extends Migration
             $table->bigIncrements('id')
                 ->unsigned();
             $table->string('code', 3);
-            $table->string('currencyName');
-            $table->string('currencySymbol', 10);
+            $table->string('name');
+            $table->string('symbol', 10);
             $table->boolean('enabled');
             $table->timestamps();
             $table->softDeletes();
