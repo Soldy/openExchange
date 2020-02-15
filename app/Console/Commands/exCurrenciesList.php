@@ -18,7 +18,7 @@ class exCurrenciesList extends Command
      *
      * @var string
      */
-    protected $description = 'ex:currencies:list';
+    protected $description = 'Currencies List';
 
     /**
      * Create a new command instance.

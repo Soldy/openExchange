@@ -19,7 +19,7 @@ class exCurrenciesUpdate extends Command
      *
      * @var string
      */
-    protected $description = 'ex currencies update';
+    protected $description = 'Currencies Update';
 
     /**
      * Create a new command instance.

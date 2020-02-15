@@ -3,10 +3,12 @@
 namespace App\Extras;
 
 use App\ExCountries;
+use App\Extras\ExCountryCurrencyExtra;
 
 
 class ExCountriesExtra
 {
+      private $countryCurrency;
       private $cacheData = [];
       private function updateCheck($codeTwo){
           $country = \App\ExCountries::where('alpha2', $codeTwo)->first();
@@ -15,16 +17,26 @@ class ExCountriesExtra
           }
           return false;
       }
-      private function updateOne($country){
-           $countryModel = $this->updateCheck($country['alpha2']);
+      private function updateOne($container){
+           $countryModel = $this->updateCheck($container['alpha2']);
            if($countryModel == false){
                $countryModel = new ExCountries();
            }
-           $countryModel->alpha2 = $country['alpha2'];
-           $countryModel->alpha3 = $country['alpha3'];
-           $countryModel->name   = $country['name'];
+           $countryModel->alpha2 = $container['alpha2'];
+           $countryModel->alpha3 = $container['alpha3'];
+           $countryModel->name   = $container['name'];
            $countryModel->save();
+           $this->addCurrencyToCountry($countryModel->id, $container['currency']);
            return $countryModel->id;
+      }
+      public function addCurrencyToCountry($countryId, $currency){
+           $currencyModel = \App\ExCurrencies::where('code', $currency)
+               ->first();
+           if(!isset($currencyModel->id)){
+               return false;
+           }
+           $this->countryCurrency->add($countryId, $currencyModel->id);
+
       }
       public function updateAll(){
           foreach($this->cacheData as $k=>$v)
@@ -33,19 +45,22 @@ class ExCountriesExtra
       }
       private function updateDataConvert($codeTwo, $container){
            return [
-               "alpha2" => $codeTwo,
-               "alpha3" => $container['alpha3'],
-               "name"   => $container['name'],
+               "alpha2"   => $codeTwo,
+               "alpha3"   => $container['alpha3'],
+               "name"     => $container['name'],
+               "currency" => $container['currencyId'],
            ];
       }
-      private function updateDataCheck($codeTwo, $data){
+      private function updateDataCheck($codeTwo, $container){
           if(strlen($codeTwo)!=2)
               return false;
-          if(!isset($data['alpha3']))
+          if(!isset($container['alpha3']))
               return false;
-          if(strlen($data['alpha3'])!=3)
+          if(strlen($container['alpha3'])!=3)
               return false;
-          if(!isset($data['name']))
+          if(!isset($container['name']))
+              return false;
+          if(!isset($container['currencyId']))
               return false;
          return true;
       }
@@ -84,5 +99,10 @@ class ExCountriesExtra
          }else
              return false;
         return true;
+     }
+     public function __construct(){
+
+         $this->countryCurrency = new ExCountryCurrencyExtra();
+
      }
 }

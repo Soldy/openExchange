@@ -20,7 +20,7 @@ class exCountriesUpdate extends Command
      *
      * @var string
      */
-    protected $description = 'ex countries update';
+    protected $description = 'Countries Update';
 
     /**
      * Create a new command instance.

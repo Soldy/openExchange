@@ -4,22 +4,21 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class exCountriesList extends Command
+class exUpdate extends Command
 {
     /**
      * The name and signature of the console command.
      *
-
      * @var string
      */
-    protected $signature = 'ex:countries:list';
+    protected $signature = 'ex:update';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Countries List';
+    protected $description = 'Full Update';
 
     /**
      * Create a new command instance.
@@ -34,15 +33,12 @@ class exCountriesList extends Command
     /**
      * Execute the console command.
      *
-     * @return  void
+     * @return mixed
      */
     public function handle()
     {
-         $this->line('Country List');
-         $headers = ['id', 'name', 'alpha2', 'alpha3'];
-         $countries = \App\ExCountries::all(
-             ['id', 'name', 'alpha2', 'alpha3']
-         )->toArray();
-         $this->table($headers, $countries);
+        $this->call('ex:currencies:update');
+        $this->call('ex:countries:update');
+        $this->line('database updated');
     }
 }
