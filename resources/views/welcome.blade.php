@@ -31,7 +31,7 @@
                    float:left; 
                    padding:5px 0;
                 }
-               div.newrow {i
+               div.newrow {
                    clear: both;
                    line-height: 1.8em;
                }
@@ -83,8 +83,9 @@
           <script>
               const calc = function(){
                   let amt    = document.getElementById('amount').value;
-                  let from_c = document.getElementById('from_c').value;
-                  let to_c   = document.getElementById('to_c').value;
+                  if (1>amt) amt =1;
+                  let from_c = document.getElementById('formCurrency').value;
+                  let to_c   = document.getElementById('toCurrency').value;
                   let url    = "/api/exchange/"+amt+"/"+from_c+"/"+to_c;
                   fetch(url)
                       .then( async function (response) {
@@ -94,7 +95,33 @@
                      document.getElementById("result").innerHTML=myJson.amount;
                   });
               }
+              const currencies = { 
+                   'CAD':"CAD - Canadian Dollar",
+                   'CHF':"CHF - Swiss Dollar",
+                   'EUR':"EUR - Euro",
+                   'GBP':"GBP - British Pound",
+                   'HKD':"HKD - Hong Kong Dollar",
+                   'JPY':"JPY - Japanese Yen",
+                   'RUB':"RUB - Russian Ruble1",
+                   'THB':"THB - Thai Bhat",
+                   'USD':"USD - American Dollar"
+              }
+              const currencyListMaker = function(id, target){
+                  let select = document.createElement("select");
+                  select.setAttribute("id", id);
+                  for(let i in currencies){
+                      let option = document.createElement('option');
+                      option.value=i;
+                      option.appendChild(document.createTextNode(currencies[i]));
+                      select.appendChild(option);
+                  }
+                  return document.getElementById(target).appendChild(select)
+
+
+              }
               window.onload =function(){
+                  currencyListMaker('formCurrency', 'formHolder')
+                  currencyListMaker('toCurrency', 'toHolder')
                   document.getElementById('calc').addEventListener("click", calc); 
               }
           </script>
@@ -109,31 +136,9 @@
                 <div class='col'>
                     <input type='text' id='amount'>
                 </div>
-            <div class='col3'>
-                <select id='from_c'>
-                    <option value='CAD'>CAD - Canadian Dollar</option>
-                    <option value='CHF'>CHF - Swiss Dollar</option>
-                    <option value='EUR'>EUR - Euro</option>
-                    <option value='GBP'>GBP - British Pound</option>
-                    <option value='HKD'>HKD - Hong Kong Dollar</option>
-                    <option value='JPY'>JPY - Japanese Yen</option>
-                    <option value='RUB'>RUB - Russian Ruble1</option>
-                    <option value='THB'>THB - Thai Bhat</option>
-                    <option value='USD'>USD - American Dollar</option>
-                </select>
+            <div class='col3' id="formHolder">
             </div>
-            <div class='col3'>
-                <select id='to_c'>
-                    <option value='CAD'>CAD - Canadian Dollar</option>
-                    <option value='CHF'>CHF - Swiss Dollar</option>
-                    <option value='EUR'>EUR - Euro</option>
-                    <option value='GBP'>GBP - British Pound</option>
-                    <option value='HKD'>HKD - Hong Kong Dollar</option>
-                    <option value='JPY'>JPY - Japanese Yen</option>
-                    <option value='RUB'>RUB - Russian Ruble</option>
-                    <option value='THB'>THB - Thai Bhat</option>						
-                    <option value='USD'>USD - American Dollar</option>
-                </select>
+            <div class='col3' id="toHolder">
             </div>
             </div>
             <div class='line readonly' id='result'></div> 
