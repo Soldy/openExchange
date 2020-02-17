@@ -7,6 +7,11 @@ use App\ExCountryCurrency;
 
 class ExCountryCurrencyExtra
 {
+      /*
+       * @param string {$country}
+       * @param string {$currency}
+       * @return boolean||integer
+       */
       private function addCheck($country, $currency){
           $data = \App\ExCountryCurrency::where('countryId', $country)
               ->where('currencyId', $currency)
@@ -16,6 +21,11 @@ class ExCountryCurrencyExtra
           }
           return false;
       }
+      /*
+       * @param string {$country}
+       * @param string {$currency}
+       * @return integer
+       */
       private function addOne($country, $currency){
            $model = $this->addCheck($country, $currency);
            if($model == false){

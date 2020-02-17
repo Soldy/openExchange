@@ -8,8 +8,18 @@ use App\Extras\ExCountryCurrencyExtra;
 
 class ExCountriesExtra
 {
+      /*
+       * @var string
+       */
       private $countryCurrency;
+      /*
+       * @var array 
+       */
       private $cacheData = [];
+      /*
+       * @param string {$codeTwo}
+       * @return boolean||array
+       */
       private function updateCheck($codeTwo){
           $country = \App\ExCountries::where('alpha2', $codeTwo)->first();
           if(isset($country->id)){
@@ -17,6 +27,10 @@ class ExCountriesExtra
           }
           return false;
       }
+      /*
+       * @param array {$container}
+       * @return string
+       */
       private function updateOne($container){
            $countryModel = $this->updateCheck($container['alpha2']);
            if($countryModel == false){
@@ -29,6 +43,11 @@ class ExCountriesExtra
            $this->addCurrencyToCountry($countryModel->id, $container['currency']);
            return $countryModel->id;
       }
+      /*
+       * @param integer {$countryId}
+       * @param string {$currency}
+       * @return string
+       */
       public function addCurrencyToCountry($countryId, $currency){
            $currencyModel = \App\ExCurrencies::where('code', $currency)
                ->first();
@@ -38,11 +57,19 @@ class ExCountriesExtra
            $this->countryCurrency->add($countryId, $currencyModel->id);
 
       }
+      /*
+       * @return boolean
+       */
       public function updateAll(){
           foreach($this->cacheData as $k=>$v)
               $this->updateOne($v);
           return true;
       }
+      /*
+       * @param string {$codeTwo}
+       * @param array {$container}
+       * @return array
+       */
       private function updateDataConvert($codeTwo, $container){
            return [
                "alpha2"   => $codeTwo,
@@ -51,6 +78,11 @@ class ExCountriesExtra
                "currency" => $container['currencyId'],
            ];
       }
+      /*
+       * @param string {$codeTwo}
+       * @param array {$container}
+       * @return boolean 
+       */
       private function updateDataCheck($codeTwo, $container){
           if(strlen($codeTwo)!=2)
               return false;
@@ -64,6 +96,9 @@ class ExCountriesExtra
               return false;
          return true;
       }
+      /*
+       * @return boolean 
+       */
       public function updateFormApi(){
           $req_url = (
               'https://free.currconv.com/api/v7/countries?apiKey='.
@@ -90,6 +125,9 @@ class ExCountriesExtra
               return false;
           }
      }
+      /*
+       * @return boolean 
+       */
      public function update(){
          $downloadResult = $this->updateFormApi();
          if( $downloadResult === true){
@@ -101,7 +139,6 @@ class ExCountriesExtra
         return true;
      }
      public function __construct(){
-
          $this->countryCurrency = new ExCountryCurrencyExtra();
 
      }

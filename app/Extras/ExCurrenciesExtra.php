@@ -7,7 +7,14 @@ use App\ExCurrencies;
 
 class ExCurrenciesExtra
 {
+      /*
+       * @var array
+       */
       private $cacheData = [];
+      /*
+       * @param string {code}
+       * @return boolean||array
+       */
       private function updateCheck($code){
           $currency = \App\ExCurrencies::where('code', $code)->first();
           if(isset($currency->id)){
