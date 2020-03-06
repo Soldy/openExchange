@@ -22,6 +22,10 @@ class ExCurrenciesExtra
           }
           return false;
       }
+      /*
+       * @param string {currency}
+       * @return integer {currency id}
+       */
       private function updateOne($currency){
            $currencyModel = $this->updateCheck($currency['code']);
            if($currencyModel == false){
@@ -34,11 +38,19 @@ class ExCurrenciesExtra
            $currencyModel->save();
            return $currencyModel->id;
       }
+      /*
+       *  @return boolean
+       */
       public function updateAll(){
           foreach($this->cacheData as $k=>$v)
               $this->updateOne($v);
           return true;
       }
+      /*
+       * @param string {code}
+       * @param array {container}
+       * @return array
+       */
       private function updateDataConvert($code, $container){
            return [
                "code"   => $code,
@@ -46,6 +58,11 @@ class ExCurrenciesExtra
                "name"   => $container['currencyName'],
            ];
       }
+      /*
+       * @param string {code}
+       * @param array {data}
+       * @return boolean
+       */
       private function updateDataCheck($code, $data){
           if(strlen($code)!=3)
               return false;
@@ -55,6 +72,9 @@ class ExCurrenciesExtra
               return false;
          return true;
       }
+      /*
+       * @return boolean
+       */
       public function updateFormApi(){
           $req_url = (
               'https://free.currconv.com/api/v7/currencies?apiKey='.
@@ -81,6 +101,9 @@ class ExCurrenciesExtra
               return false;
           }
      }
+      /*
+       * @return boolean
+       */
      public function update(){
          $downloadResult = $this->updateFormApi();
          if( $downloadResult === true){
