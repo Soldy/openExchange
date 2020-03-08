@@ -22,3 +22,4 @@ Route::get('/exchange/info', 'ExchangeController@getInfo');
 Route::get('/exchange/cache/clear', 'ExchangeController@getCacheClear');
 Route::get('/exchange/{amount}/{from}/{to}', 'ExchangeController@getExchange');
 
+Route::get('/country/list', 'ExCountryController@list');
